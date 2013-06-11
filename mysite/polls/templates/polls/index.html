@@ -1,0 +1,33 @@
+{% if user.is_authenticated %}
+    Welcome {{ user.username }}<br>
+    <a href = "{% url 'polls:logout' %}">logout</a>
+
+    {% if latest_poll_list %}
+        <ul>
+    {% for poll in latest_poll_list %}
+        <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+    {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+{% else %}
+    <p>Welcome, new user. Please log in.</p>
+    <form method="post" action="{% url 'polls:login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                 <td>User Name : </td>
+                 <td><input type=textfield name='username' value="" length=30/></td>
+            </tr>
+            <tr>
+                 <td>Password : </td>
+                 <td><input type=textfield name='password' value="" length=30/></td>
+            </tr>
+	    <tr>
+		 <td><input type="submit" value="login" /></td>
+	    </tr>
+        </table>
+{% endif %}
+

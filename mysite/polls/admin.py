@@ -1,0 +1,31 @@
+# this is the admin page for Polls 
+from django.contrib import admin
+from polls.models import Poll
+from polls.models import Choice
+
+# to be a submenu within poll
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 3
+
+# custom class to customize how 'poll' object is displayed on admin page
+# must pass it to admin.site.register
+class PollAdmin(admin.ModelAdmin):
+    # to display a typical field
+    # fields = ['pub_date', 'question']
+
+    # to display a field site, 
+    # first element in tuple signifies column header
+    fieldsets = [
+        (None,               {'fields': ['question']}),
+        ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+    ]
+    inlines = [ChoiceInline]
+
+    # this affects how the list of polls are display
+    list_display = ('question', 'pub_date', 'was_published_recently')
+
+
+# must be registered
+admin.site.register(Choice)
+admin.site.register(Poll, PollAdmin)

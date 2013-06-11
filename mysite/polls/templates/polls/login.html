@@ -1,0 +1,18 @@
+{{ error_msg }}
+
+<form method="post" action="{% url 'polls:login' %}">
+{% csrf_token %}
+        <table>
+            <tr>
+                 <td>User Name : </td>
+                 <td><input type=textfield name='username' value="" length=30/></td>
+            </tr>
+            <tr>
+                 <td>Password : </td>
+                 <td><input type=textfield name='password' value="" length=30/></td>
+            </tr>
+	    <tr>
+		 <td><input type="submit" value="login" /></td>
+	    </tr>
+        </table>
+</form>
